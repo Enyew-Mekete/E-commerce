@@ -27,7 +27,7 @@
 Deployment: GitHub Pages
 
 
-👨‍💻 Author
+👨‍💻 Author:
 Enyew Mekete
 
 Role: Full Stack Developer
