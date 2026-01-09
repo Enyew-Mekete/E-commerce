@@ -28,17 +28,12 @@ Deployment: GitHub Pages
 
 
 👨‍💻 Author
-
 Enyew Mekete
 
 Role: Full Stack Developer
-
 Education: Bonga University (CS)
-
 Company: En-Tech S.C.
-
 GitHub: @enyew-mekete
-
 LinkedIn: https://www.linkedin.com/in/enyew-mekete-106308372
 
 📄 License
