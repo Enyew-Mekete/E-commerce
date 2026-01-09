@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 
 const Login = () => {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    setValidated(true);
+
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      return;
+    }
+
+    // Always show network message even if credentials are correct
+    alert('Please switch your network');
+  };
+
   return (
     <>
       <Navbar />
@@ -17,7 +34,7 @@ const Login = () => {
           <div className="row justify-content-center mt-4">
             <div className="col-md-5 col-lg-4 col-sm-8">
               <div className="card shadow-sm border-0 p-3">
-                <form>
+                <form className="needs-validation" noValidate validated={validated} onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{ color: "#1B5E7F" }}>
                       Email Address
@@ -28,6 +45,9 @@ const Login = () => {
                       placeholder="name@example.com"
                       required
                     />
+                    <div className="invalid-feedback">
+                      Please enter a valid email address.
+                    </div>
                   </div>
 
                   <div className="mb-4">
@@ -39,7 +59,11 @@ const Login = () => {
                       className="form-control form-control-lg"
                       placeholder="Password"
                       required
+                      minLength="6"
                     />
+                    <div className="invalid-feedback">
+                      Password is required (min 6 characters).
+                    </div>
                   </div>
 
                   <div className="mb-4 text-center">
@@ -53,8 +77,8 @@ const Login = () => {
 
                   <div className="text-center">
                     <button
-                      className="btn btn-lg px-5 py-3 text-white fw-bold"
                       type="submit"
+                      className="btn btn-lg px-5 py-3 text-white fw-bold"
                       style={{ backgroundColor: "#1B5E7F" }}
                     >
                       Login

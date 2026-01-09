@@ -1,8 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Footer, Navbar } from "../components";
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+    const [validated, setValidated] = useState(false);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+
+        setValidated(true);
+
+        // Check password match
+        if (password !== confirmPassword) {
+            setPasswordError('Passwords do not match');
+            return;
+        } else {
+            setPasswordError('');
+        }
+
+        // Always show network message even if valid
+        alert('Please switch your network');
+    };
+
+    const handleConfirmChange = (e) => {
+        setConfirmPassword(e.target.value);
+        if (password && e.target.value && password !== e.target.value) {
+            setPasswordError('Passwords do not match');
+        } else {
+            setPasswordError('');
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -14,10 +46,10 @@ const Register = () => {
                     </h1>
                     <hr style={{ borderColor: "#1B5E7F", width: "150px", margin: "auto" }} />
 
-                    <div className="row justify-content-center mt-6">
+                    <div className="row justify-content-center mt-5">
                         <div className="col-md-5 col-lg-5 col-sm-8">
                             <div className="card shadow-sm border-0 p-4">
-                                <form>
+                                <form className="needs-validation" noValidate validated={validated} onSubmit={handleSubmit}>
                                     <div className="mb-4">
                                         <label className="form-label fw-bold" style={{ color: "#1B5E7F" }}>
                                             Full Name
@@ -28,6 +60,9 @@ const Register = () => {
                                             placeholder="Enter Your Name"
                                             required
                                         />
+                                        <div className="invalid-feedback">
+                                            Please enter your full name.
+                                        </div>
                                     </div>
 
                                     <div className="mb-4">
@@ -40,6 +75,9 @@ const Register = () => {
                                             placeholder="name@example.com"
                                             required
                                         />
+                                        <div className="invalid-feedback">
+                                            Please enter a valid email address.
+                                        </div>
                                     </div>
 
                                     <div className="mb-4">
@@ -50,8 +88,14 @@ const Register = () => {
                                             type="password"
                                             className="form-control form-control-lg"
                                             placeholder="Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             required
+                                            minLength="6"
                                         />
+                                        <div className="invalid-feedback">
+                                            Password must be at least 6 characters.
+                                        </div>
                                     </div>
 
                                     <div className="mb-4">
@@ -62,8 +106,19 @@ const Register = () => {
                                             type="password"
                                             className="form-control form-control-lg"
                                             placeholder="Re-enter Password"
+                                            value={confirmPassword}
+                                            onChange={handleConfirmChange}
                                             required
+                                            style={{ borderColor: passwordError ? '#dc3545' : '' }}
                                         />
+                                        {passwordError && (
+                                            <div className="text-danger small mt-2">
+                                                {passwordError}
+                                            </div>
+                                        )}
+                                        <div className="invalid-feedback">
+                                            Please confirm your password.
+                                        </div>
                                     </div>
 
                                     <div className="mb-4 text-center">
@@ -77,8 +132,8 @@ const Register = () => {
 
                                     <div className="text-center">
                                         <button
-                                            className="btn btn-lg px-5 py-3 text-white fw-bold"
                                             type="submit"
+                                            className="btn btn-lg px-5 py-3 text-white fw-bold"
                                             style={{ backgroundColor: "#1B5E7F" }}
                                         >
                                             Register
